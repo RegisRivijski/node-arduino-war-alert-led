@@ -25,14 +25,13 @@ module.exports = {
         for (const state of statesNew) {
           if (state.state === ALERT_STATE) {
             newAlert = true;
+            break;
           }
         }
         if (newAlert) {
           alertLed.on();
-          console.log('alertLed on');
         } else {
           alertLed.off();
-          console.log('alertLed off');
         }
       }, 30000);
     });
