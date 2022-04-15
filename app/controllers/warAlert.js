@@ -3,12 +3,14 @@ const warAlertHelper = require('../helpers/warAlert')
 
 const {
   ALERT_STATE,
-  ALERT_PIN,
+  ALERT_LED_PIN,
+  SAFE_LED_PIN,
 } = require('../constants/index');
 
 module.exports = {
   warAlertArduinoLed() {
-    const alertLed = new five.Led(ALERT_PIN);
+    const alertLed = new five.Led(ALERT_LED_PIN);
+    const safeLed = new five.Led(SAFE_LED_PIN);
 
     setInterval(async () => {
       const statesNew = await warAlertHelper.getActiveAlertsVC()
@@ -26,9 +28,12 @@ module.exports = {
       }
       if (newAlert) {
         alertLed.on();
+        safeLed.off();
       } else {
         alertLed.off();
+        safeLed.on();
       }
+
     }, 30000);
   },
 };
